@@ -39,13 +39,27 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/**
+ * enum opcodes - possible opcodes
+ * @invalid: invalid opcode
+ * @no_op: no opcode
+ * @push: push
+ * @pall: pall
+ */
+
+enum opcodes
+{
+	invalid,
+	no_op,
+	push,
+	pall
+};
 
 /**
  * struct command_s - opcode and its argument
  * @opcode: the opcode
  * @arg: the argument
  */
-enum opcodes {no_op, push, pall};
 typedef struct command_s
 {
 	enum opcodes opcode;
@@ -54,7 +68,7 @@ typedef struct command_s
 
 
 /* main */
-enum opcodes get_opcode(char **line);
+enum opcodes get_opcode(char **line, int ln_num);
 int get_arg(char **line, enum opcodes opcode);
 void chomp_spaces(char **line);
 void *malloc_or_exit(size_t n);

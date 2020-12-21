@@ -8,11 +8,12 @@
 int main(int ac, char *av[])
 {
 	char *line = NULL, *ln_start = NULL, c;
-	int ln_num = 0, ln_total = 0;
+	int ln_num = 0, ln_total = 0, i = 0;
 	FILE *input;
 	size_t len = 0;
 	ssize_t n_chars = 0;
 	command_t **commands, *c_command;
+	enum opcodes op;
 
 	if (ac != 2)
 	{
@@ -43,7 +44,14 @@ int main(int ac, char *av[])
 			continue;
 		commands[ln_num - 1] = malloc_or_exit(sizeof(command_t));
 		c_command = commands[ln_num - 1];
-		c_command->opcode = get_opcode(&line);
+		op = get_opcode(&line, ln_num);
+		if (op == invalid)
+		{
+			for (i = 0; i < ln_num; ++i)
+				free(commands[i]);
+			free(commands);
+			exit(EXIT_FAILURE);
+		}
 		c_command->arg = get_arg(&line, c_command->opcode);
 		free(ln_start);
 		line = NULL;
@@ -53,7 +61,7 @@ int main(int ac, char *av[])
 	return (0);
 }
 
-enum opcodes get_opcode(char **line)
+enum opcodes get_opcode(char **line, int ln_num)
 {
 	int len = 0;
 	enum opcodes current_opcode;
@@ -70,6 +78,13 @@ enum opcodes get_opcode(char **line)
 	else if (!strncmp("pall", *line, len))
 		current_opcode = pall;
 
+	else
+	{
+		(*line)[len] = '\0';
+		dprintf(STDERR_FILENO, "L%d: unknown instruction %s\n",
+			ln_num, *line);
+		return (invalid);
+	}
 	*line += len;
 	return (current_opcode);
 }
