@@ -70,14 +70,14 @@ typedef struct command_s
 /* main */
 void check_ac(int ac);
 void check_open(FILE *input, char *av1);
-void check_invalid(enum opcodes op, int ln_num, command_t **commands);
+void clean_up(int ln_num, command_t **commands, int did_err);
 void *malloc_or_exit(size_t n);
 
 /* parse_op_arg */
 enum opcodes get_opcode(char **line, int ln_num);
 void chomp_spaces(char **line);
-int get_arg(char **line, enum opcodes opcode);
-
+int get_arg(char **line, enum opcodes opcode, int ln_num, int *did_err);
+int is_numeric(char *line);
 
 /* 0-dlinked_lists */
 size_t print_stack(const stack_t *h);

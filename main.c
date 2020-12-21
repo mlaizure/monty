@@ -11,7 +11,7 @@
 int main(int ac, char *av[])
 {
 	char *line = NULL, *ln_start = NULL, c;
-	int ln_num = 0, ln_total = 0;
+	int ln_num = 0, ln_total = 0, did_err = 0;
 	FILE *input;
 	size_t len = 0;
 	ssize_t n_chars = 0;
@@ -25,7 +25,6 @@ int main(int ac, char *av[])
 		if (c == '\n')
 			++ln_total;
 	rewind(input);
-
 	commands = malloc_or_exit(sizeof(command_t *) * (ln_total + 1));
 	while ((n_chars = getline(&line, &len, input)) != -1)
 	{
@@ -38,8 +37,13 @@ int main(int ac, char *av[])
 		commands[ln_num - 1] = malloc_or_exit(sizeof(command_t));
 		c_command = commands[ln_num - 1];
 		op = get_opcode(&line, ln_num);
-		check_invalid(op, ln_num, commands);
-		c_command->arg = get_arg(&line, c_command->opcode);
+		if (op == invalid)
+			clean_up(ln_num, commands, did_err);
+		chomp_spaces(&line);
+		c_command->arg =
+			get_arg(&line, c_command->opcode, ln_num, &did_err);
+		if (did_err)
+			clean_up(ln_num, commands, did_err);
 		free(ln_start);
 		line = NULL;
 	}
@@ -82,26 +86,24 @@ void check_open(FILE *input, char *av1)
 }
 
 /**
- * check_invalid - frees array of structs of opcodes and args and exits if
- * opcode is invalid (error printed to stderr in get_opcode)
- * @op: opcode to check
- * @ln_num: line number of opcode
+ * clean_up - frees array of structs of opcodes and args and exits
+ * @ln_num: line number
  * @commands: array of structs of opcodes and args
+ * @did_err: error indicator
  * Return: none
  */
 
-void check_invalid(enum opcodes op, int ln_num, command_t **commands)
+void clean_up(int ln_num, command_t **commands, int did_err)
 {
 	int i = 0;
 
-	if (op == invalid)
-	{
-		for (i = 0; i < ln_num; ++i)
-			free(commands[i]);
-		free(commands);
+	for (i = 0; i < ln_num; ++i)
+		free(commands[i]);
+	free(commands);
+	if (did_err)
 		exit(EXIT_FAILURE);
-	}
-
+	else
+		exit(EXIT_SUCCESS);
 }
 
 /**

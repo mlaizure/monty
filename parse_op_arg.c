@@ -49,19 +49,51 @@ void chomp_spaces(char **line)
  * get_arg - gets argument from line in monty byte code file
  * @line: line from monty byte code file
  * @opcode: opcode from line
+ * @ln_num: line number
+ * @did_err: error indicator
  * Return: argument from line
  */
-int get_arg(char **line, enum opcodes opcode)
+int get_arg(char **line, enum opcodes opcode, int ln_num, int *did_err)
 {
 	int arg;
 
 	switch (opcode)
 	{
 	case push:
-		arg = atoi(*line);
+		if (is_numeric(*line))
+			arg = atoi(*line);
+		else
+		{
+			*did_err = 1;
+			dprintf(STDERR_FILENO, "L%d: usage: push integer\n",
+				ln_num);
+		}
 		break;
 	default:
 		break;
 	}
 	return (arg);
+}
+
+/**
+ * is_numeric - checks to see if arg is int
+ * @line: line containing arg to check
+ * Return: 1 if int, 0 if not
+ */
+int is_numeric(char *line)
+{
+	if (!*line)
+		return (0);
+
+	if (*line == '-')
+		++line;
+
+	while (*line && *line != ' ')
+	{
+		if (*line >= '0' && *line <= '9')
+			++line;
+		else
+			return (0);
+	}
+	return (1);
 }
