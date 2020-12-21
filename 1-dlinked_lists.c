@@ -72,7 +72,7 @@ stack_t *insert_dnodeint_at_index(stack_t **h, unsigned int idx, int n)
 		return (addr);
 	}
 
-	new = malloc(sizeof(stack_t));
+	new = malloc_or_exit(sizeof(stack_t));
 	if (!new)
 		return (NULL);
 	new->n = n;

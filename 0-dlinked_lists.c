@@ -45,7 +45,7 @@ stack_t *add_dnodeint(stack_t **head, const int n)
 {
 	stack_t *new;
 
-	new = malloc(sizeof(stack_t));
+	new = malloc_or_exit(sizeof(stack_t));
 	if (!new)
 		return (NULL);
 
@@ -71,7 +71,7 @@ stack_t *add_dnodeint_end(stack_t **head, const int n)
 {
 	stack_t *new, *last;
 
-	new = malloc(sizeof(stack_t));
+	new = malloc_or_exit(sizeof(stack_t));
 	if (!new)
 		return (NULL);
 

@@ -3,6 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -33,5 +38,38 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+
+/**
+ * struct command_s - opcode and its argument
+ * @opcode: the opcode
+ * @arg: the argument
+ */
+enum opcodes {no_op, push, pall};
+typedef struct command_s
+{
+	enum opcodes opcode;
+	int arg;
+} command_t;
+
+
+/* main */
+enum opcodes get_opcode(char **line);
+int get_arg(char **line, enum opcodes opcode);
+void chomp_spaces(char **line);
+void *malloc_or_exit(size_t n);
+
+/* 0-dlinked_lists */
+size_t print_stack(const stack_t *h);
+size_t stack_len(const stack_t *h);
+stack_t *add_dnodeint(stack_t **head, const int n);
+stack_t *add_dnodeint_end(stack_t **head, const int n);
+void free_stack(stack_t *head);
+
+/* 1-dlinked_lists */
+stack_t *get_dnodeint_at_index(stack_t *head, unsigned int index);
+int sum_stack(stack_t *head);
+stack_t *insert_dnodeint_at_index(stack_t **h, unsigned int idx, int n);
+int delete_dnodeint_at_index(stack_t **head, unsigned int index);
 
 #endif /* MONTY_H */
