@@ -62,6 +62,10 @@ instruction_t *get_str_func(enum opcodes opcode)
 		current_func->opcode = "pint";
 		current_func->f = &exec_pint;
 		return (current_func);
+	case pop:
+		current_func->opcode = "pop";
+		current_func->f = &exec_pop;
+		return (current_func);
 	default:
 		break;
 	}

@@ -23,6 +23,8 @@ enum opcodes get_opcode(char **line, int ln_num)
 		current_opcode = pall;
 	else if (!strncmp("pint", *line, len))
 		current_opcode = pint;
+	else if (!strncmp("pop", *line, len))
+		current_opcode = pop;
 	else
 	{
 		(*line)[len] = '\0';

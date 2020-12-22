@@ -31,7 +31,6 @@ void exec_pall(stack_t **stack, unsigned int line_number)
  */
 void exec_pint(stack_t **stack, unsigned int line_number)
 {
-	(void)line_number;
 	if (!*stack)
 	{
 		commands[line_number - 1]->err = 1;
@@ -40,4 +39,22 @@ void exec_pint(stack_t **stack, unsigned int line_number)
 		return;
 	}
 	printf("%d\n", (*stack)->n);
+}
+
+/**
+ * exec_pop - removes top element of the stack
+ * @stack: the stack
+ * @line_number: line number from monty byte file
+ * Return: none
+ */
+void exec_pop(stack_t **stack, unsigned int line_number)
+{
+	if (!*stack)
+	{
+		commands[line_number - 1]->err = 1;
+		dprintf(STDERR_FILENO, "L%d: can't pop an emptry stack\n",
+			line_number);
+		return;
+	}
+	delete_dnodeint_at_index(stack, 0);
 }
