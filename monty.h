@@ -110,6 +110,9 @@ void exec_swap(stack_t **stack, unsigned int line_number);
 /* instructions-1 */
 void exec_add(stack_t **stack, unsigned int line_number);
 
+/* instructions-2 */
+void exec_nop(stack_t **stack, unsigned int line_number);
+
 /* 0-dlinked_lists */
 size_t print_stack(const stack_t *h);
 size_t stack_len(const stack_t *h);

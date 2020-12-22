@@ -74,6 +74,10 @@ instruction_t *get_str_func(enum opcodes opcode)
 		current_func->opcode = "add";
 		current_func->f = &exec_add;
 		return (current_func);
+	case nop:
+		current_func->opcode = "nop";
+		current_func->f = &exec_nop;
+		return (current_func);
 	default:
 		break;
 	}
