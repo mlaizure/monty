@@ -28,7 +28,7 @@ int main(int ac, char *av[])
 		line = ln_start;
 		++ln_num;
 		chomp_spaces(&line);
-		if (*line == '\0')
+		if (*line == '\0' || *line == '#')
 		{
 			commands[ln_num - 1] = NULL;
 			continue;
