@@ -50,6 +50,7 @@ typedef struct instruction_s
  * @swap: swap
  * @add: add
  * @sub: sub
+ * @divide: div
  */
 
 enum opcodes
@@ -62,7 +63,8 @@ enum opcodes
 	pop,
 	swap,
 	add,
-	sub
+	sub,
+	divide
 };
 
 /**
@@ -112,6 +114,7 @@ void exec_swap(stack_t **stack, unsigned int line_number);
 /* instructions-1 */
 void exec_add(stack_t **stack, unsigned int line_number);
 void exec_sub(stack_t **stack, unsigned int line_number);
+void exec_div(stack_t **stack, unsigned int line_number);
 
 /* instructions-2 */
 void exec_nop(stack_t **stack, unsigned int line_number);

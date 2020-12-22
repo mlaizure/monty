@@ -51,38 +51,32 @@ instruction_t *get_str_func(enum opcodes opcode)
 	switch (opcode)
 	{
 	case push:
-		current_func->opcode = "push";
-		current_func->f = &exec_push;
+		current_func->opcode = "push", current_func->f = &exec_push;
 		return (current_func);
 	case pall:
-		current_func->opcode = "pall";
-		current_func->f = &exec_pall;
+		current_func->opcode = "pall", current_func->f = &exec_pall;
 		return (current_func);
 	case pint:
-		current_func->opcode = "pint";
-		current_func->f = &exec_pint;
+		current_func->opcode = "pint", current_func->f = &exec_pint;
 		return (current_func);
 	case pop:
-		current_func->opcode = "pop";
-		current_func->f = &exec_pop;
+		current_func->opcode = "pop", current_func->f = &exec_pop;
 		return (current_func);
 	case swap:
-		current_func->opcode = "swap";
-		current_func->f = &exec_swap;
+		current_func->opcode = "swap", current_func->f = &exec_swap;
 		return (current_func);
 	case add:
-		current_func->opcode = "add";
-		current_func->f = &exec_add;
+		current_func->opcode = "add", current_func->f = &exec_add;
 		return (current_func);
 	case nop:
-		current_func->opcode = "nop";
-		current_func->f = &exec_nop;
+		current_func->opcode = "nop", current_func->f = &exec_nop;
 		return (current_func);
 	case sub:
-		current_func->opcode = "sub";
-		current_func->f = &exec_sub;
+		current_func->opcode = "sub", current_func->f = &exec_sub;
 		return (current_func);
-
+	case divide:
+		current_func->opcode = "div", current_func->f = &exec_div;
+		return (current_func);
 	default:
 		break;
 	}
