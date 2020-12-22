@@ -78,6 +78,11 @@ instruction_t *get_str_func(enum opcodes opcode)
 		current_func->opcode = "nop";
 		current_func->f = &exec_nop;
 		return (current_func);
+	case sub:
+		current_func->opcode = "sub";
+		current_func->f = &exec_sub;
+		return (current_func);
+
 	default:
 		break;
 	}

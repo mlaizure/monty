@@ -31,6 +31,8 @@ enum opcodes get_opcode(char **line, int ln_num)
 		current_opcode = add;
 	else if (!strncmp("nop", *line, len))
 		current_opcode = nop;
+	else if (!strncmp("sub", *line, len))
+		current_opcode = sub;
 	else
 	{
 		(*line)[len] = '\0';
