@@ -6,10 +6,12 @@
  * @commands: array of structs of opcodes and args
  * @line: line from monty byte file
  * @did_err: error indicator
+ * @input: monty byte file
  * Return: none
  */
 
-void clean_up(int ln_num, command_t **commands, char *line, int did_err)
+void clean_up(int ln_num, command_t **commands, char *line, FILE *input,
+	      int did_err)
 {
 	int i = 0;
 
@@ -17,6 +19,7 @@ void clean_up(int ln_num, command_t **commands, char *line, int did_err)
 		free(commands[i]);
 	free(commands);
 	free(line);
+	fclose(input);
 	if (did_err)
 		exit(EXIT_FAILURE);
 	else

@@ -13,42 +13,42 @@ int main(int ac, char *av[])
 	char *line = NULL, *ln_start = NULL;
 	int ln_total = 0, did_err = 0;
 	unsigned int ln_num = 0;
-	FILE *input;
+	FILE *input = NULL;
 	size_t len = 0;
 	ssize_t n_chars = 0;
-	command_t *c_command;
+	command_t *cmd = NULL;
 
 	check_ac(ac);
 	input = fopen(av[1], "rb");
 	check_open(input, av[1]);
 	ln_total = line_count(input);
-	commands = malloc_or_exit(sizeof(command_t *) * (ln_total + 1));
-	while ((n_chars = getline(&line, &len, input)) != -1)
+	commands = malloc_or_exit(sizeof(command_t *) * (ln_total));
+	while ((n_chars = getline(&ln_start, &len, input)) != -1)
 	{
-		line[n_chars - 1] = '\0';
-		ln_start = line;
+		ln_start[n_chars - 1] = '\0';
+		line = ln_start;
 		++ln_num;
 		chomp_spaces(&line);
 		if (*line == '\0')
+		{
+			commands[ln_num - 1] = NULL;
 			continue;
+		}
 		commands[ln_num - 1] = malloc_or_exit(sizeof(command_t));
-		c_command = commands[ln_num - 1];
-		c_command->opcode = get_opcode(&line, ln_num);
-		if (c_command->opcode == invalid)
-			clean_up(ln_num, commands, line, 1);
+		cmd = commands[ln_num - 1];
+		cmd->opcode = get_opcode(&line, ln_num);
+		if (cmd->opcode == invalid)
+			clean_up(ln_num, commands, ln_start, input, 1);
 		chomp_spaces(&line);
-		c_command->arg =
-			get_arg(&line, c_command->opcode, ln_num, &did_err);
+		cmd->arg = get_arg(&line, cmd->opcode, ln_num, &did_err);
 		if (did_err)
-			clean_up(ln_num, commands, line, did_err);
-		c_command->ln_num = ln_num;
+			clean_up(ln_num, commands, ln_start, input, did_err);
+		cmd->ln_num = ln_num;
 		free(ln_start);
-		line = NULL;
+		ln_start = NULL;
 	}
-	commands[ln_num] = NULL;
-	fclose(input);
 	run_command(commands, ln_total);
-	clean_up(ln_num, commands, line, 0);
+	clean_up(ln_num, commands, ln_start, input, 0);
 	return (0);
 }
 

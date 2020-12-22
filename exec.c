@@ -13,12 +13,18 @@ void run_command(command_t **commands, int num_cmds)
 	stack_t *stack = NULL;
 
 	funcs = malloc_or_exit(sizeof(instruction_t) * (num_cmds + 1));
-	for (i = 0; commands[i]; ++i)
-		funcs[i] = get_str_func(commands[i]->opcode);
+	for (i = 0; i < num_cmds; ++i)
+	{
+		if (commands[i])
+			funcs[i] = get_str_func(commands[i]->opcode);
+		else
+			funcs[i] = NULL;
+	}
 	funcs[i] = NULL;
-	for (i = 0; funcs[i]; ++i)
-		funcs[i]->f(&stack, commands[i]->ln_num);
-	for (i = 0; funcs[i]; ++i)
+	for (i = 0; i < num_cmds; ++i)
+		if (funcs[i])
+			funcs[i]->f(&stack, commands[i]->ln_num);
+	for (i = 0; i < num_cmds; ++i)
 		free(funcs[i]);
 	free(funcs);
 	free_stack(stack);
