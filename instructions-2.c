@@ -86,3 +86,25 @@ void exec_rotl(stack_t **stack, unsigned int line_number)
 	add_dnodeint_end(stack, (*stack)->n);
 	delete_dnodeint_at_index(stack, 0);
 }
+
+/**
+ * exec_rotr - rotates the stack to the bottom
+ * @stack: the stack
+ * @line_number: line number from monty byte file
+ * Return: none
+ */
+void exec_rotr(stack_t **stack, unsigned int line_number)
+{
+	size_t idx;
+	stack_t *last, *temp = *stack;
+
+	(void)line_number;
+
+	if (!*stack)
+		return;
+
+	idx = stack_len(temp) - 1;
+	last = get_dnodeint_at_index(temp, idx);
+	add_dnodeint(stack, last->n);
+	delete_dnodeint_at_index(stack, (idx + 1));
+}

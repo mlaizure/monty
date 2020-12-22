@@ -108,6 +108,9 @@ void get_str_func1(enum opcodes opcode, instruction_t *current_func)
 	case rotl:
 		current_func->opcode = "rotl", current_func->f = &exec_rotl;
 		break;
+	case rotr:
+		current_func->opcode = "rotr", current_func->f = &exec_rotr;
+		break;
 	default:
 		break;
 	}

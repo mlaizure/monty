@@ -56,6 +56,7 @@ typedef struct instruction_s
  * @pchar: prints int from top as char
  * @pstr: prints string starting at top
  * @rotl: top becomes bottom
+ * @rotr: bottom becomes top
  */
 
 enum opcodes
@@ -74,7 +75,8 @@ enum opcodes
 	mod,
 	pchar,
 	pstr,
-	rotl
+	rotl,
+	rotr
 };
 
 /**
@@ -134,6 +136,7 @@ void exec_nop(stack_t **stack, unsigned int line_number);
 void exec_pchar(stack_t **stack, unsigned int line_number);
 void exec_pstr(stack_t **stack, unsigned int line_number);
 void exec_rotl(stack_t **stack, unsigned int line_number);
+void exec_rotr(stack_t **stack, unsigned int line_number);
 
 /* 0-dlinked_lists */
 size_t print_stack(const stack_t *h);

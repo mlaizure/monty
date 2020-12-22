@@ -29,6 +29,7 @@ enum opcodes get_opcode(char **line, int ln_num)
 	(!strncmp("pchar", *line, len)) && (current_opcode = pchar);
 	(!strncmp("pstr", *line, len)) && (current_opcode = pstr);
 	(!strncmp("rotl", *line, len)) && (current_opcode = rotl);
+	(!strncmp("rotr", *line, len)) && (current_opcode = rotr);
 
 	if (current_opcode == invalid)
 	{
