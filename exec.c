@@ -66,6 +66,10 @@ instruction_t *get_str_func(enum opcodes opcode)
 		current_func->opcode = "pop";
 		current_func->f = &exec_pop;
 		return (current_func);
+	case swap:
+		current_func->opcode = "swap";
+		current_func->f = &exec_swap;
+		return (current_func);
 	default:
 		break;
 	}
