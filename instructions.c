@@ -52,7 +52,7 @@ void exec_pop(stack_t **stack, unsigned int line_number)
 	if (!*stack)
 	{
 		commands[line_number - 1]->err = 1;
-		dprintf(STDERR_FILENO, "L%d: can't pop an emptry stack\n",
+		dprintf(STDERR_FILENO, "L%d: can't pop an empty stack\n",
 			line_number);
 		return;
 	}
