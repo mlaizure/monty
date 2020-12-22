@@ -42,7 +42,7 @@ typedef struct instruction_s
 /**
  * enum opcodes - possible opcodes
  * @invalid: invalid opcode
- * @no_op: no opcode
+ * @nop: no opcode
  * @push: push
  * @pall: pall
  */
@@ -50,7 +50,7 @@ typedef struct instruction_s
 enum opcodes
 {
 	invalid,
-	no_op,
+	nop,
 	push,
 	pall
 };
@@ -59,17 +59,23 @@ enum opcodes
  * struct command_s - opcode and its argument
  * @opcode: the opcode
  * @arg: the argument
+ * @ln_num: line number of the instruction
  */
 typedef struct command_s
 {
 	enum opcodes opcode;
 	int arg;
+	unsigned int ln_num;
 } command_t;
 
+extern command_t **commands;
 
 /* main */
 void check_ac(int ac);
 void check_open(FILE *input, char *av1);
+int line_count(FILE *input);
+
+/* utilities */
 void clean_up(int ln_num, command_t **commands, int did_err);
 void *malloc_or_exit(size_t n);
 
@@ -78,6 +84,14 @@ enum opcodes get_opcode(char **line, int ln_num);
 void chomp_spaces(char **line);
 int get_arg(char **line, enum opcodes opcode, int ln_num, int *did_err);
 int is_numeric(char *line);
+
+/* exec */
+void run_command(command_t **commands, int num_cmds);
+instruction_t *get_str_func(enum opcodes opcode);
+
+/* instructions */
+void exec_push(stack_t **stack, unsigned int line_number);
+void exec_pall(stack_t **stack, unsigned int line_number);
 
 /* 0-dlinked_lists */
 size_t print_stack(const stack_t *h);

@@ -12,7 +12,7 @@ enum opcodes get_opcode(char **line, int ln_num)
 	enum opcodes current_opcode;
 
 	if (**line == '\0')
-		return (no_op);
+		return (nop);
 
 	while ((*line)[len] != ' ' && (*line)[len] != '\0')
 		++len;
