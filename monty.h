@@ -42,15 +42,16 @@ typedef struct instruction_s
 /**
  * enum opcodes - possible opcodes
  * @invalid: invalid opcode
- * @nop: no opcode
+ * @nop: no operation
  * @push: push
- * @pall: pall
- * @pint: pint
+ * @pall: print all
+ * @pint: print top
  * @pop: pop
- * @swap: swap
- * @add: add
- * @sub: sub
- * @divide: div
+ * @swap: swap top 2
+ * @add: add top 2
+ * @sub: subtract top 2
+ * @divide: divide top 2
+ * @mul: multiply top 2
  */
 
 enum opcodes
@@ -64,7 +65,8 @@ enum opcodes
 	swap,
 	add,
 	sub,
-	divide
+	divide,
+	mul
 };
 
 /**
@@ -115,6 +117,7 @@ void exec_swap(stack_t **stack, unsigned int line_number);
 void exec_add(stack_t **stack, unsigned int line_number);
 void exec_sub(stack_t **stack, unsigned int line_number);
 void exec_div(stack_t **stack, unsigned int line_number);
+void exec_mul(stack_t **stack, unsigned int line_number);
 
 /* instructions-2 */
 void exec_nop(stack_t **stack, unsigned int line_number);

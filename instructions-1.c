@@ -82,3 +82,28 @@ void exec_div(stack_t **stack, unsigned int line_number)
 	(*stack)->next->n = quo;
 	delete_dnodeint_at_index(stack, 0);
 }
+
+/**
+ * exec_mul - multiplies the top two elements of the stack
+ * @stack: the stack
+ * @line_number: line number from monty byte file
+ * Return: none
+ */
+void exec_mul(stack_t **stack, unsigned int line_number)
+{
+	int len = stack_len(*stack);
+	int value0, value1, prod;
+
+	if (len < 2)
+	{
+		commands[line_number - 1]->err = 1;
+		dprintf(STDERR_FILENO, "L%d: can't mul, stack too short\n",
+			line_number);
+		return;
+	}
+	value0 = (*stack)->n;
+	value1 = (*stack)->next->n;
+	prod = value1 * value0;
+	(*stack)->next->n = prod;
+	delete_dnodeint_at_index(stack, 0);
+}

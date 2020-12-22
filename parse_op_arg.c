@@ -13,10 +13,8 @@ enum opcodes get_opcode(char **line, int ln_num)
 
 	if (**line == '\0')
 		return (nop);
-
 	while ((*line)[len] != ' ' && (*line)[len] != '\0')
 		++len;
-
 	if (!strncmp("push", *line, len))
 		current_opcode = push;
 	else if (!strncmp("pall", *line, len))
@@ -35,6 +33,8 @@ enum opcodes get_opcode(char **line, int ln_num)
 		current_opcode = sub;
 	else if (!strncmp("div", *line, len))
 		current_opcode = divide;
+	else if (!strncmp("mul", *line, len))
+		current_opcode = mul;
 	else
 	{
 		(*line)[len] = '\0';

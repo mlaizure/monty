@@ -77,6 +77,9 @@ instruction_t *get_str_func(enum opcodes opcode)
 	case divide:
 		current_func->opcode = "div", current_func->f = &exec_div;
 		return (current_func);
+	case mul:
+		current_func->opcode = "mul", current_func->f = &exec_mul;
+		return (current_func);
 	default:
 		break;
 	}
