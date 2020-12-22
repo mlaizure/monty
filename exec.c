@@ -4,11 +4,11 @@
  * run_command - make stack and call function handlers
  * @commands: opcodes and args from monty byte file
  * @num_cmds: number of instructions from monty byte file
- * Return: none
+ * Return: 1 on failure, 0 on success
  */
-void run_command(command_t **commands, int num_cmds)
+int run_command(command_t **commands, int num_cmds)
 {
-	int i = 0;
+	int i = 0, err = 0;
 	instruction_t **funcs;
 	stack_t *stack = NULL;
 
@@ -25,13 +25,17 @@ void run_command(command_t **commands, int num_cmds)
 	{
 		if (funcs[i])
 			funcs[i]->f(&stack, commands[i]->ln_num);
-		if (commands[i]->err)
+		if (commands[i] && commands[i]->err)
+		{
+			err = commands[i]->err;
 			break;
+		}
 	}
 	for (i = 0; i < num_cmds; ++i)
 		free(funcs[i]);
 	free(funcs);
 	free_stack(stack);
+	return (err);
 }
 
 /**

@@ -57,6 +57,7 @@ int get_arg(char **line, enum opcodes opcode, int ln_num, int *did_err)
 {
 	int arg;
 
+	chomp_spaces(line);
 	switch (opcode)
 	{
 	case push:

@@ -11,7 +11,7 @@ command_t **commands;
 int main(int ac, char *av[])
 {
 	char *line = NULL, *ln_start = NULL;
-	int ln_total = 0, did_err = 0;
+	int ln_total = 0, did_err = 0, status = 0;
 	unsigned int ln_num = 0;
 	FILE *input = NULL;
 	size_t len = 0;
@@ -19,8 +19,7 @@ int main(int ac, char *av[])
 	command_t *cmd = NULL;
 
 	check_ac(ac);
-	input = fopen(av[1], "rb");
-	check_open(input, av[1]);
+	input = check_open(av[1]);
 	ln_total = line_count(input);
 	commands = malloc_or_exit(sizeof(command_t *) * (ln_total));
 	while ((n_chars = getline(&ln_start, &len, input)) != -1)
@@ -38,7 +37,6 @@ int main(int ac, char *av[])
 		cmd->opcode = get_opcode(&line, ln_num);
 		if (cmd->opcode == invalid)
 			clean_up(ln_num, commands, ln_start, input, 1);
-		chomp_spaces(&line);
 		cmd->arg = get_arg(&line, cmd->opcode, ln_num, &did_err);
 		if (did_err)
 			clean_up(ln_num, commands, ln_start, input, did_err);
@@ -47,8 +45,8 @@ int main(int ac, char *av[])
 		free(ln_start);
 		ln_start = NULL;
 	}
-	run_command(commands, ln_total);
-	clean_up(ln_num, commands, ln_start, input, 0);
+	status = run_command(commands, ln_total);
+	clean_up(ln_num, commands, ln_start, input, status);
 	return (0);
 }
 
@@ -71,18 +69,19 @@ void check_ac(int ac)
 /**
  * check_open - makes sure file opened correctly and prints to stderr and
  * exits on error
- * @input: file stream to check
  * @av1: name of file that can't be opened
- * Return: none
+ * Return: file stream
  */
-void check_open(FILE *input, char *av1)
+FILE *check_open(char *av1)
 {
+	FILE *input = fopen(av1, "rb");
+
 	if (!input)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", av1);
 		exit(EXIT_FAILURE);
 	}
-
+	return (input);
 }
 
 /**

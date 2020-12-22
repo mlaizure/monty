@@ -76,7 +76,7 @@ extern command_t **commands;
 
 /* main */
 void check_ac(int ac);
-void check_open(FILE *input, char *av1);
+FILE *check_open(char *av1);
 int line_count(FILE *input);
 
 /* utilities */
@@ -91,7 +91,7 @@ int get_arg(char **line, enum opcodes opcode, int ln_num, int *did_err);
 int is_numeric(char *line);
 
 /* exec */
-void run_command(command_t **commands, int num_cmds);
+int run_command(command_t **commands, int num_cmds);
 instruction_t *get_str_func(enum opcodes opcode);
 
 /* instructions */
