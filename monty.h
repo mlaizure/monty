@@ -53,6 +53,7 @@ typedef struct instruction_s
  * @divide: divide top 2
  * @mul: multiply top 2
  * @mod: remainder of division of top 2
+ * @pchar: prints int from top as char
  */
 
 enum opcodes
@@ -68,7 +69,8 @@ enum opcodes
 	sub,
 	divide,
 	mul,
-	mod
+	mod,
+	pchar
 };
 
 /**
@@ -125,6 +127,7 @@ void exec_mod(stack_t **stack, unsigned int line_number);
 
 /* instructions-2 */
 void exec_nop(stack_t **stack, unsigned int line_number);
+void exec_pchar(stack_t **stack, unsigned int line_number);
 
 /* 0-dlinked_lists */
 size_t print_stack(const stack_t *h);

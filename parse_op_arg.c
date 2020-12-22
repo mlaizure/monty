@@ -37,6 +37,8 @@ enum opcodes get_opcode(char **line, int ln_num)
 		current_opcode = mul;
 	else if (!strncmp("mod", *line, len))
 		current_opcode = mod;
+	else if (!strncmp("pchar", *line, len))
+		current_opcode = pchar;
 	else
 	{
 		(*line)[len] = '\0';

@@ -99,8 +99,8 @@ void get_str_func1(enum opcodes opcode, instruction_t *current_func)
 {
 	switch (opcode)
 	{
-	case mod:
-		current_func->opcode = "mod", current_func->f = &exec_mod;
+	case pchar:
+		current_func->opcode = "pchar", current_func->f = &exec_pchar;
 		break;
 	default:
 		break;
