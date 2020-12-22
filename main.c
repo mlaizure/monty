@@ -35,12 +35,12 @@ int main(int ac, char *av[])
 		c_command = commands[ln_num - 1];
 		c_command->opcode = get_opcode(&line, ln_num);
 		if (c_command->opcode == invalid)
-			clean_up(ln_num, commands, did_err);
+			clean_up(ln_num, commands, line, 1);
 		chomp_spaces(&line);
 		c_command->arg =
 			get_arg(&line, c_command->opcode, ln_num, &did_err);
 		if (did_err)
-			clean_up(ln_num, commands, did_err);
+			clean_up(ln_num, commands, line, did_err);
 		c_command->ln_num = ln_num;
 		free(ln_start);
 		line = NULL;
@@ -48,6 +48,7 @@ int main(int ac, char *av[])
 	commands[ln_num] = NULL;
 	fclose(input);
 	run_command(commands, ln_total);
+	clean_up(ln_num, commands, line, 0);
 	return (0);
 }
 
@@ -93,7 +94,7 @@ void check_open(FILE *input, char *av1)
 int line_count(FILE *input)
 {
 	char c;
-	int ln_total;
+	int ln_total = 0;
 
 	while ((c = fgetc(input)) != EOF)
 		if (c == '\n')

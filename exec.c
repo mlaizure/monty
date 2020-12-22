@@ -18,6 +18,10 @@ void run_command(command_t **commands, int num_cmds)
 	funcs[i] = NULL;
 	for (i = 0; funcs[i]; ++i)
 		funcs[i]->f(&stack, commands[i]->ln_num);
+	for (i = 0; funcs[i]; ++i)
+		free(funcs[i]);
+	free(funcs);
+	free_stack(stack);
 }
 
 /**

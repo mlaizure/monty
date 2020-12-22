@@ -76,7 +76,7 @@ void check_open(FILE *input, char *av1);
 int line_count(FILE *input);
 
 /* utilities */
-void clean_up(int ln_num, command_t **commands, int did_err);
+void clean_up(int ln_num, command_t **commands, char *line, int did_err);
 void *malloc_or_exit(size_t n);
 
 /* parse_op_arg */

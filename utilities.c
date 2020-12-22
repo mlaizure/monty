@@ -4,17 +4,19 @@
  * clean_up - frees array of structs of opcodes and args and exits
  * @ln_num: line number
  * @commands: array of structs of opcodes and args
+ * @line: line from monty byte file
  * @did_err: error indicator
  * Return: none
  */
 
-void clean_up(int ln_num, command_t **commands, int did_err)
+void clean_up(int ln_num, command_t **commands, char *line, int did_err)
 {
 	int i = 0;
 
 	for (i = 0; i < ln_num; ++i)
 		free(commands[i]);
 	free(commands);
+	free(line);
 	if (did_err)
 		exit(EXIT_FAILURE);
 	else
