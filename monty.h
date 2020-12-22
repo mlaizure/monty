@@ -52,6 +52,7 @@ typedef struct instruction_s
  * @sub: subtract top 2
  * @divide: divide top 2
  * @mul: multiply top 2
+ * @mod: remainder of division of top 2
  */
 
 enum opcodes
@@ -66,7 +67,8 @@ enum opcodes
 	add,
 	sub,
 	divide,
-	mul
+	mul,
+	mod
 };
 
 /**
@@ -104,7 +106,8 @@ int is_numeric(char *line);
 
 /* exec */
 int run_command(command_t **commands, int num_cmds);
-instruction_t *get_str_func(enum opcodes opcode);
+void get_str_func(enum opcodes opcode, instruction_t *current_func);
+void get_str_func1(enum opcodes opcode, instruction_t *current_func);
 
 /* instructions-0 */
 void exec_push(stack_t **stack, unsigned int line_number);
@@ -118,6 +121,7 @@ void exec_add(stack_t **stack, unsigned int line_number);
 void exec_sub(stack_t **stack, unsigned int line_number);
 void exec_div(stack_t **stack, unsigned int line_number);
 void exec_mul(stack_t **stack, unsigned int line_number);
+void exec_mod(stack_t **stack, unsigned int line_number);
 
 /* instructions-2 */
 void exec_nop(stack_t **stack, unsigned int line_number);

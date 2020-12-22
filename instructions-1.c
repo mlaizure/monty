@@ -107,3 +107,36 @@ void exec_mul(stack_t **stack, unsigned int line_number)
 	(*stack)->next->n = prod;
 	delete_dnodeint_at_index(stack, 0);
 }
+
+/**
+ * exec_mod - remainder of division of second element by top element
+ * @stack: the stack
+ * @line_number: line number from monty byte file
+ * Return: none
+ */
+void exec_mod(stack_t **stack, unsigned int line_number)
+{
+	int len = stack_len(*stack);
+	int value0, value1, rem;
+
+	if (len < 2)
+	{
+		commands[line_number - 1]->err = 1;
+		dprintf(STDERR_FILENO, "L%d: can't mod, stack too short\n",
+			line_number);
+		return;
+	}
+
+	value0 = (*stack)->n;
+	if (value0 == 0)
+	{
+		commands[line_number - 1]->err = 1;
+		dprintf(STDERR_FILENO, "L%d: division by zero\n",
+			line_number);
+		return;
+	}
+	value1 = (*stack)->next->n;
+	rem = value1 % value0;
+	(*stack)->next->n = rem;
+	delete_dnodeint_at_index(stack, 0);
+}
