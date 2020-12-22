@@ -52,6 +52,7 @@ void exec_pchar(stack_t **stack, unsigned int line_number)
 void exec_pstr(stack_t **stack, unsigned int line_number)
 {
 	int value;
+	stack_t *temp = *stack;
 
 	(void)line_number;
 	if (!*stack)
@@ -60,9 +61,9 @@ void exec_pstr(stack_t **stack, unsigned int line_number)
 		return;
 	}
 
-	for (; (*stack); (*stack) = (*stack)->next)
+	for (; temp; temp = temp->next)
 	{
-		value = (*stack)->n;
+		value = temp->n;
 		if (value <= 0 || value > 127)
 			break;
 		putchar(value);
