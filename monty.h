@@ -48,6 +48,7 @@ typedef struct instruction_s
  * @pint: pint
  * @pop: pop
  * @swap: swap
+ * @add: add
  */
 
 enum opcodes
@@ -58,7 +59,8 @@ enum opcodes
 	pall,
 	pint,
 	pop,
-	swap
+	swap,
+	add
 };
 
 /**
@@ -98,12 +100,15 @@ int is_numeric(char *line);
 int run_command(command_t **commands, int num_cmds);
 instruction_t *get_str_func(enum opcodes opcode);
 
-/* instructions */
+/* instructions-0 */
 void exec_push(stack_t **stack, unsigned int line_number);
 void exec_pall(stack_t **stack, unsigned int line_number);
 void exec_pint(stack_t **stack, unsigned int line_number);
 void exec_pop(stack_t **stack, unsigned int line_number);
 void exec_swap(stack_t **stack, unsigned int line_number);
+
+/* instructions-1 */
+void exec_add(stack_t **stack, unsigned int line_number);
 
 /* 0-dlinked_lists */
 size_t print_stack(const stack_t *h);

@@ -27,6 +27,8 @@ enum opcodes get_opcode(char **line, int ln_num)
 		current_opcode = pop;
 	else if (!strncmp("swap", *line, len))
 		current_opcode = swap;
+	else if (!strncmp("add", *line, len))
+		current_opcode = add;
 	else
 	{
 		(*line)[len] = '\0';

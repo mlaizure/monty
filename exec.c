@@ -70,6 +70,10 @@ instruction_t *get_str_func(enum opcodes opcode)
 		current_func->opcode = "swap";
 		current_func->f = &exec_swap;
 		return (current_func);
+	case add:
+		current_func->opcode = "add";
+		current_func->f = &exec_add;
+		return (current_func);
 	default:
 		break;
 	}
