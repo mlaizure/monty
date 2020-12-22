@@ -34,8 +34,7 @@ int main(int ac, char *av[])
 			commands[ln_num - 1] = NULL;
 			continue;
 		}
-		commands[ln_num - 1] = malloc_or_exit(sizeof(command_t));
-		cmd = commands[ln_num - 1];
+		cmd = commands[ln_num - 1] = malloc_or_exit(sizeof(command_t));
 		cmd->opcode = get_opcode(&line, ln_num);
 		if (cmd->opcode == invalid)
 			clean_up(ln_num, commands, ln_start, input, 1);
@@ -44,6 +43,7 @@ int main(int ac, char *av[])
 		if (did_err)
 			clean_up(ln_num, commands, ln_start, input, did_err);
 		cmd->ln_num = ln_num;
+		cmd->err = 0;
 		free(ln_start);
 		ln_start = NULL;
 	}

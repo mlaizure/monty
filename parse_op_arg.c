@@ -19,10 +19,10 @@ enum opcodes get_opcode(char **line, int ln_num)
 
 	if (!strncmp("push", *line, len))
 		current_opcode = push;
-
 	else if (!strncmp("pall", *line, len))
 		current_opcode = pall;
-
+	else if (!strncmp("pint", *line, len))
+		current_opcode = pint;
 	else
 	{
 		(*line)[len] = '\0';

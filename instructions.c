@@ -22,3 +22,22 @@ void exec_pall(stack_t **stack, unsigned int line_number)
 	(void)line_number;
 	print_stack(*stack);
 }
+
+/**
+ * exec_pint - prints the value at the top of the stack
+ * @stack: the stack
+ * @line_number: line number from monty byte file
+ * Return: none
+ */
+void exec_pint(stack_t **stack, unsigned int line_number)
+{
+	(void)line_number;
+	if (!*stack)
+	{
+		commands[line_number - 1]->err = 1;
+		dprintf(STDERR_FILENO, "L%d: can't pint, stack empty\n",
+			line_number);
+		return;
+	}
+	printf("%d\n", (*stack)->n);
+}

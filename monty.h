@@ -45,6 +45,7 @@ typedef struct instruction_s
  * @nop: no opcode
  * @push: push
  * @pall: pall
+ * @pint: pint
  */
 
 enum opcodes
@@ -52,7 +53,8 @@ enum opcodes
 	invalid,
 	nop,
 	push,
-	pall
+	pall,
+	pint
 };
 
 /**
@@ -60,12 +62,14 @@ enum opcodes
  * @opcode: the opcode
  * @arg: the argument
  * @ln_num: line number of the instruction
+ * @err: error flag
  */
 typedef struct command_s
 {
 	enum opcodes opcode;
 	int arg;
 	unsigned int ln_num;
+	int err;
 } command_t;
 
 extern command_t **commands;
@@ -93,6 +97,7 @@ instruction_t *get_str_func(enum opcodes opcode);
 /* instructions */
 void exec_push(stack_t **stack, unsigned int line_number);
 void exec_pall(stack_t **stack, unsigned int line_number);
+void exec_pint(stack_t **stack, unsigned int line_number);
 
 /* 0-dlinked_lists */
 size_t print_stack(const stack_t *h);

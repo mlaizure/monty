@@ -22,8 +22,12 @@ void run_command(command_t **commands, int num_cmds)
 	}
 	funcs[i] = NULL;
 	for (i = 0; i < num_cmds; ++i)
+	{
 		if (funcs[i])
 			funcs[i]->f(&stack, commands[i]->ln_num);
+		if (commands[i]->err)
+			break;
+	}
 	for (i = 0; i < num_cmds; ++i)
 		free(funcs[i]);
 	free(funcs);
@@ -49,6 +53,10 @@ instruction_t *get_str_func(enum opcodes opcode)
 	case pall:
 		current_func->opcode = "pall";
 		current_func->f = &exec_pall;
+		return (current_func);
+	case pint:
+		current_func->opcode = "pint";
+		current_func->f = &exec_pint;
 		return (current_func);
 	default:
 		break;
