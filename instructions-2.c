@@ -79,10 +79,10 @@ void exec_pstr(stack_t **stack, unsigned int line_number)
  */
 void exec_rotl(stack_t **stack, unsigned int line_number)
 {
-	int top_value = (*stack)->n;
-
 	(void)line_number;
 
-	add_dnodeint_end(stack, top_value);
+	if (!*stack)
+		return;
+	add_dnodeint_end(stack, (*stack)->n);
 	delete_dnodeint_at_index(stack, 0);
 }
