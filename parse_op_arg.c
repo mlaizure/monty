@@ -9,37 +9,27 @@
 enum opcodes get_opcode(char **line, int ln_num)
 {
 	int len = 0;
-	enum opcodes current_opcode;
+	enum opcodes current_opcode = invalid;
 
 	if (**line == '\0')
 		return (nop);
 	while ((*line)[len] != ' ' && (*line)[len] != '\0')
 		++len;
-	if (!strncmp("push", *line, len))
-		current_opcode = push;
-	else if (!strncmp("pall", *line, len))
-		current_opcode = pall;
-	else if (!strncmp("pint", *line, len))
-		current_opcode = pint;
-	else if (!strncmp("pop", *line, len))
-		current_opcode = pop;
-	else if (!strncmp("swap", *line, len))
-		current_opcode = swap;
-	else if (!strncmp("add", *line, len))
-		current_opcode = add;
-	else if (!strncmp("nop", *line, len))
-		current_opcode = nop;
-	else if (!strncmp("sub", *line, len))
-		current_opcode = sub;
-	else if (!strncmp("div", *line, len))
-		current_opcode = divide;
-	else if (!strncmp("mul", *line, len))
-		current_opcode = mul;
-	else if (!strncmp("mod", *line, len))
-		current_opcode = mod;
-	else if (!strncmp("pchar", *line, len))
-		current_opcode = pchar;
-	else
+	(!strncmp("push", *line, len)) && (current_opcode = push);
+	(!strncmp("pall", *line, len)) && (current_opcode = pall);
+	(!strncmp("pint", *line, len)) && (current_opcode = pint);
+	(!strncmp("pop", *line, len)) && (current_opcode = pop);
+	(!strncmp("swap", *line, len)) && (current_opcode = swap);
+	(!strncmp("add", *line, len)) && (current_opcode = add);
+	(!strncmp("nop", *line, len)) && (current_opcode = nop);
+	(!strncmp("sub", *line, len)) && (current_opcode = sub);
+	(!strncmp("div", *line, len)) && (current_opcode = divide);
+	(!strncmp("mul", *line, len)) && (current_opcode = mul);
+	(!strncmp("mod", *line, len)) && (current_opcode = mod);
+	(!strncmp("pchar", *line, len)) && (current_opcode = pchar);
+	(!strncmp("pstr", *line, len)) && (current_opcode = pstr);
+
+	if (current_opcode == invalid)
 	{
 		(*line)[len] = '\0';
 		dprintf(STDERR_FILENO, "L%d: unknown instruction %s\n",

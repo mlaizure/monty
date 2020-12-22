@@ -102,6 +102,9 @@ void get_str_func1(enum opcodes opcode, instruction_t *current_func)
 	case pchar:
 		current_func->opcode = "pchar", current_func->f = &exec_pchar;
 		break;
+	case pstr:
+		current_func->opcode = "pstr", current_func->f = &exec_pstr;
+		break;
 	default:
 		break;
 	}

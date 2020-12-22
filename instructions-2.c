@@ -42,3 +42,30 @@ void exec_pchar(stack_t **stack, unsigned int line_number)
 	putchar(value0);
 	putchar('\n');
 }
+
+/**
+ * exec_pstr - prints string starting at top of stack
+ * @stack: the stack
+ * @line_number: line number from monty byte file
+ * Return: none
+ */
+void exec_pstr(stack_t **stack, unsigned int line_number)
+{
+	int value;
+
+	(void)line_number;
+	if (!*stack)
+	{
+		putchar('\n');
+		return;
+	}
+
+	for (; (*stack); (*stack) = (*stack)->next)
+	{
+		value = (*stack)->n;
+		if (value <= 0 || value > 127)
+			break;
+		putchar(value);
+	}
+	putchar('\n');
+}
